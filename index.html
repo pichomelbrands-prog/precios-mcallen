@@ -206,33 +206,39 @@ function renderizar() {
 
   let num = 1;
   document.getElementById('tbody').innerHTML = filtrado.map(p => {
-    const verde = p.cdmx_barato === true;
-    const rojo  = p.cdmx_barato === false;
-    const rowCls = verde ? 'opp' : rojo ? 'nope' : '';
-    const colorDif = verde ? '#166534' : rojo ? '#B91C1C' : '#6B7280';
-    const dif_s = p.dif !== null ? `${p.dif >= 0 ? '+' : ''}$${p.dif.toFixed(2)}` : 'N/D';
-    const pct_s = p.pct !== null ? `${p.pct >= 0 ? '+' : ''}${p.pct.toFixed(1)}%` : 'N/D';
-    const mx_s  = p.precio_mx !== null ? `$${p.precio_mx.toFixed(2)}` : 'N/D';
-    const badge = verde ? '<span class="badge-op">Más barato CDMX</span>'
-                : rojo  ? '<span class="badge-no">Más barato McAllen</span>'
-                : '<span style="color:#9CA3AF;font-size:10px">Sin datos</span>';
-    const fBadge = p.verificado
-      ? '<span class="badge-claude">★ Claude</span>'
-      : p.fuente_mx.includes('auto')
-        ? '<span class="badge-sniim">SNIIM</span>'
-        : '<span class="badge-ref">Ref.</span>';
-    return `<tr class="${rowCls}">
-      <td class="idx">${num++}</td>
-      <td class="tl">${p.nombre}</td>
-      <td class="num usd">$${p.pa_lb.toFixed(2)}</td>
-      <td class="num usd">$${p.pa_usd_kg.toFixed(2)}</td>
-      <td class="num usd" style="font-weight:700">$${p.pa_mxn_kg.toFixed(2)}</td>
-      <td class="num sep" style="font-weight:700">${mx_s}</td>
-      <td>${fBadge}</td>
-      <td class="num sep" style="color:${colorDif};font-weight:700">${dif_s}</td>
-      <td style="color:${colorDif};font-weight:700">${pct_s}</td>
-      <td>${badge}</td>
-    </tr>`;
+    try {
+      const verde = p.cdmx_barato === true;
+      const rojo  = p.cdmx_barato === false;
+      const rowCls = verde ? 'opp' : rojo ? 'nope' : '';
+      const colorDif = verde ? '#166534' : rojo ? '#B91C1C' : '#6B7280';
+      const dif_s = (p.dif !== null && p.dif !== undefined) ? `${p.dif >= 0 ? '+' : ''}$${Number(p.dif).toFixed(2)}` : 'N/D';
+      const pct_s = (p.pct !== null && p.pct !== undefined) ? `${p.pct >= 0 ? '+' : ''}${Number(p.pct).toFixed(1)}%` : 'N/D';
+      const mx_s  = (p.precio_mx !== null && p.precio_mx !== undefined) ? `$${Number(p.precio_mx).toFixed(2)}` : 'N/D';
+      const badge = verde ? '<span class="badge-op">Más barato CDMX</span>'
+                  : rojo  ? '<span class="badge-no">Más barato McAllen</span>'
+                  : '<span style="color:#9CA3AF;font-size:10px">Sin datos</span>';
+      const fuente = p.fuente_mx || '';
+      const fBadge = p.verificado
+        ? '<span class="badge-claude">★ Claude</span>'
+        : fuente.includes('auto')
+          ? '<span class="badge-sniim">SNIIM</span>'
+          : '<span class="badge-ref">Ref.</span>';
+      return `<tr class="${rowCls}">
+        <td class="idx">${num++}</td>
+        <td class="tl">${p.nombre || ''}</td>
+        <td class="num usd">$${Number(p.pa_lb).toFixed(2)}</td>
+        <td class="num usd">$${Number(p.pa_usd_kg).toFixed(2)}</td>
+        <td class="num usd" style="font-weight:700">$${Number(p.pa_mxn_kg).toFixed(2)}</td>
+        <td class="num sep" style="font-weight:700">${mx_s}</td>
+        <td>${fBadge}</td>
+        <td class="num sep" style="color:${colorDif};font-weight:700">${dif_s}</td>
+        <td style="color:${colorDif};font-weight:700">${pct_s}</td>
+        <td>${badge}</td>
+      </tr>`;
+    } catch(err) {
+      num++;
+      return '';
+    }
   }).join('');
 }
 
