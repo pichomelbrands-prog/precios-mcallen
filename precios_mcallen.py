@@ -530,9 +530,20 @@ def generar_reporte():
 if __name__ == "__main__":
     print("Pichomel Brands — Monitor de Precios McAllen TX v4.0")
     print(f"Reporte diario: {HORA_REPORTE} hrs | {URL_PAGINA}")
-    print("Ctrl+C para detener\n")
-    generar_reporte()
-    schedule.every().day.at(HORA_REPORTE).do(generar_reporte)
-    while True:
-        schedule.run_pending()
-        time.sleep(60)
+
+    # En GitHub Actions solo genera el reporte una vez y termina
+    # En tu computadora local corre el schedule diario
+    en_github = os.environ.get("GITHUB_ACTIONS") == "true"
+
+    if en_github:
+        print("Corriendo en GitHub Actions — generando reporte unico...")
+        generar_reporte()
+        print("Listo. GitHub Actions programara la siguiente ejecucion.")
+    else:
+        print("Corriendo en modo local — reporte diario a las", HORA_REPORTE)
+        print("Ctrl+C para detener\n")
+        generar_reporte()
+        schedule.every().day.at(HORA_REPORTE).do(generar_reporte)
+        while True:
+            schedule.run_pending()
+            time.sleep(60)
