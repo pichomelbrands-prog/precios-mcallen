@@ -1,0 +1,53 @@
+name: Reporte diario de precios
+
+on:
+  schedule:
+    - cron: '30 13 * * 1-5'  # 7:30 AM Ciudad de Mexico (UTC-6), lunes a viernes
+  workflow_dispatch:           # permite correrlo manualmente desde GitHub
+
+jobs:
+  generar-reporte:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Obtener repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Instalar dependencias
+        run: pip install requests openpyxl schedule twilio reportlab
+
+      - name: Crear carpeta docs
+        run: mkdir -p docs
+
+      - name: Copiar index.html a docs
+        run: cp index.html docs/index.html
+
+      - name: Generar reporte
+        env:
+          GMAIL_ORIGEN:    ${{ secrets.GMAIL_ORIGEN }}
+          GMAIL_APP_PASS:  ${{ secrets.GMAIL_APP_PASS }}
+          CORREO_DESTINO:  ${{ secrets.CORREO_DESTINO }}
+          TWILIO_SID:      ${{ secrets.TWILIO_SID }}
+          TWILIO_TOKEN:    ${{ secrets.TWILIO_TOKEN }}
+          TWILIO_WHATSAPP: ${{ secrets.TWILIO_WHATSAPP }}
+          TU_WHATSAPP:     ${{ secrets.TU_WHATSAPP }}
+          URL_PAGINA:      https://pichomelbrands-prog.github.io/precios-mcallen
+        run: python precios_mcallen.py
+
+      - name: Copiar datos y archivos a docs
+        run: |
+          cp datos.json docs/datos.json
+          mv ~/precios_mcallen_*.pdf docs/ 2>/dev/null || true
+          mv ~/precios_mcallen_*.xlsx docs/ 2>/dev/null || true
+
+      - name: Publicar en GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs
+          keep_files: true
