@@ -6,13 +6,13 @@
 <title>Pichomel Brands — Precios Mayoristas McAllen TX vs CDMX</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#F7F8FA;color:#374151}
+body{background:#F7F8FA;color:#374151;padding-top:0}
 .header{background:#fff;border-bottom:1px solid #E5E7EB;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:10px}
 .logo-icon{width:34px;height:34px;background:#1B5E20;border-radius:8px;display:flex;align-items:center;justify-content:center}
 .logo-icon svg{width:20px;height:20px;fill:white}
 .logo-text{font-size:16px;font-weight:700;color:#1B5E20}
-.logo-sub{font-size:11px;color:#6B7280;margin-top:1px}
+.logo-sub{font-size:11px;color:#6B7280}
 .badge-live{background:#DCFCE7;color:#166534;font-size:11px;padding:3px 10px;border-radius:20px;font-weight:600}
 .btn-refresh{background:#1B5E20;color:white;border:none;padding:7px 16px;border-radius:8px;font-size:12px;cursor:pointer;font-weight:600}
 .hero{background:#1B5E20;padding:20px 24px;color:white}
@@ -23,27 +23,25 @@ body{background:#F7F8FA;color:#374151}
 .metric-label{font-size:10px;color:#6B7280;margin-bottom:4px}
 .metric-val{font-size:20px;font-weight:700;color:#111}
 .green{color:#166534}.red{color:#B91C1C}.blue{color:#1D4ED8}
-.tc-bar{margin:0 24px 10px;background:#FFF8E1;border:1px solid #FDE68A;border-radius:8px;padding:8px 14px;font-size:12px;color:#92400E;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px}
+.tc-bar{margin:0 24px 10px;background:#FFF8E1;border:1px solid #FDE68A;border-radius:8px;padding:8px 14px;font-size:12px;color:#92400E;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px}
 .tc-val{font-weight:700;font-size:14px;color:#78350F}
 .ref-bar{margin:0 24px 10px;background:#F1F5F9;border:1px solid #CBD5E1;border-radius:8px;padding:8px 14px;font-size:11px;color:#475569;display:flex;align-items:center;gap:8px}
 .filters{padding:0 24px 12px;display:flex;gap:6px;flex-wrap:wrap}
 .chip{font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid #E5E7EB;cursor:pointer;color:#6B7280;background:#fff;font-weight:500}
 .chip.active{background:#1B5E20;color:white;border-color:#1B5E20}
-.table-wrap{margin:0 24px 20px;background:#fff;border:1px solid #E5E7EB;border-radius:12px;overflow:visible}.table-scroll{overflow-x:auto;border-radius:12px}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:820px}
+.tabla-cont{margin:0 24px 20px}.tabla-scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:12px;min-width:820px;background:#fff;border:1px solid #E5E7EB;border-radius:0}
 thead tr{background:#1B5E20}
-th{padding:10px 8px;text-align:center;color:white;font-weight:600;font-size:10px;line-height:1.4}
+th{padding:10px 8px;text-align:center;color:white;font-weight:600;font-size:10px;line-height:1.4;border:none}
 th.tl{text-align:left}
-tbody tr{border-bottom:1px solid #F3F4F6}
-tbody tr.opp{background-color:#F0FDF4}
-tbody tr.nope{background-color:#FFF1F2}
-tbody tr:not(.opp):not(.nope){background-color:#ffffff}
-td{padding:9px 8px;text-align:center;color:#111111;font-size:12px}
+td{padding:9px 8px;text-align:center;color:#111;font-size:12px;border-bottom:1px solid #F3F4F6;border:none;border-bottom:1px solid #F0F0F0}
 td.tl{text-align:left;font-weight:600}
 td.idx{color:#9CA3AF;font-weight:700;font-size:11px}
-td.num{font-family:monospace}
-td.usd{background:rgba(219,234,254,0.4)}
+td.usd{background:#EFF6FF}
 .sep{border-left:2px solid #D1D5DB}
+.row-cdmx{background:#F0FDF4}
+.row-mc{background:#FFF1F2}
+.row-na{background:#ffffff}
 .badge-op{background:#DCFCE7;color:#166534;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
 .badge-no{background:#FEE2E2;color:#B91C1C;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
 .badge-cl{background:#1D4ED8;color:white;padding:1px 6px;border-radius:5px;font-size:9px;font-weight:600;display:inline-block}
@@ -107,8 +105,8 @@ td.usd{background:rgba(219,234,254,0.4)}
   <span class="chip" onclick="filtrar(this,'hierba')">Hierbas</span>
 </div>
 
-<div class="table-wrap">
-  <div class="table-scroll">
+<div class="tabla-cont">
+  <div class="tabla-scroll">
   <table>
     <thead>
       <tr>
@@ -154,32 +152,18 @@ function cargarDatos() {
   xhr.open('GET', 'datos.json?t=' + Date.now(), true);
   xhr.onload = function() {
     if (xhr.status === 200) {
-      try {
-        DATOS = JSON.parse(xhr.responseText);
-        renderizar();
-        document.getElementById('badge-live').textContent = 'En vivo';
-        document.getElementById('badge-live').style.background = '#DCFCE7';
-        document.getElementById('badge-live').style.color = '#166534';
-      } catch(e) {
-        mostrarError();
-      }
-    } else {
-      mostrarError();
+      DATOS = JSON.parse(xhr.responseText);
+      renderizar();
+      document.getElementById('badge-live').textContent = 'En vivo';
+      document.getElementById('badge-live').style.background = '#DCFCE7';
+      document.getElementById('badge-live').style.color = '#166534';
     }
   };
-  xhr.onerror = function() { mostrarError(); };
   xhr.send();
 }
 
-function mostrarError() {
-  document.getElementById('badge-live').textContent = 'Sin datos';
-  document.getElementById('badge-live').style.background = '#FEE2E2';
-  document.getElementById('badge-live').style.color = '#B91C1C';
-  document.getElementById('tbody').innerHTML = '<tr><td colspan="10" class="loading">No se pudieron cargar los datos.</td></tr>';
-}
-
-function fmt2(n) { return Number(n).toFixed(2); }
-function fmt1(n) { return Number(n).toFixed(1); }
+function f2(n){ return parseFloat(n).toFixed(2); }
+function f1(n){ return parseFloat(n).toFixed(1); }
 
 function renderizar() {
   if (!DATOS) return;
@@ -187,8 +171,8 @@ function renderizar() {
   var prods = DATOS.productos;
 
   document.getElementById('hero-sub').textContent = DATOS.fecha + '  ·  USDA AMS · SNIIM · Claude  ·  TC: $' + tc + ' MXN';
-  document.getElementById('tc-val').textContent = '$1 USD = $' + fmt2(tc) + ' MXN';
-  document.getElementById('m-tc').textContent = '$' + fmt2(tc) + ' MXN';
+  document.getElementById('tc-val').textContent = '$1 USD = $' + f2(tc) + ' MXN';
+  document.getElementById('m-tc').textContent = '$' + f2(tc) + ' MXN';
   document.getElementById('m-total').textContent = prods.length;
 
   var cdmx_b = 0, mc_b = 0;
@@ -199,9 +183,9 @@ function renderizar() {
   document.getElementById('m-cdmx').textContent = cdmx_b;
   document.getElementById('m-mc').textContent = mc_b;
 
-  var hoy_str = new Date().toISOString().split('T')[0];
-  document.getElementById('dl-pdf').href = 'precios_mcallen_' + hoy_str + '.pdf';
-  document.getElementById('dl-excel').href = 'precios_mcallen_' + hoy_str + '.xlsx';
+  var hoy = new Date().toISOString().split('T')[0];
+  document.getElementById('dl-pdf').href = 'precios_mcallen_' + hoy + '.pdf';
+  document.getElementById('dl-excel').href = 'precios_mcallen_' + hoy + '.xlsx';
 
   var filtrado = [];
   for (var j = 0; j < prods.length; j++) {
@@ -212,36 +196,34 @@ function renderizar() {
     else if (p.cat === FILTRO) filtrado.push(p);
   }
 
-  var html = '';
-  var num = 1;
+  var rows = '';
   for (var k = 0; k < filtrado.length; k++) {
     var p = filtrado[k];
     var verde = p.cdmx_barato === true;
     var rojo  = p.cdmx_barato === false;
-    var rowCls = verde ? 'opp' : rojo ? 'nope' : '';
-    var colorDif = verde ? '#166534' : rojo ? '#B91C1C' : '#6B7280';
-    var dif_s = (p.dif !== null && p.dif !== undefined) ? (p.dif >= 0 ? '+' : '') + '$' + fmt2(p.dif) : 'N/D';
-    var pct_s = (p.pct !== null && p.pct !== undefined) ? (p.pct >= 0 ? '+' : '') + fmt1(p.pct) + '%' : 'N/D';
-    var mx_s  = (p.precio_mx !== null && p.precio_mx !== undefined) ? '$' + fmt2(p.precio_mx) : 'N/D';
+    var rowbg = verde ? '#F0FDF4' : rojo ? '#FFF1F2' : '#ffffff';
+    var colDif = verde ? '#166534' : rojo ? '#B91C1C' : '#6B7280';
+    var dif_s = (p.dif != null) ? (p.dif >= 0 ? '+' : '') + '$' + f2(p.dif) : 'N/D';
+    var pct_s = (p.pct != null) ? (p.pct >= 0 ? '+' : '') + f1(p.pct) + '%' : 'N/D';
+    var mx_s  = (p.precio_mx != null) ? '$' + f2(p.precio_mx) : 'N/D';
     var badge = verde ? '<span class="badge-op">Más barato CDMX</span>' : rojo ? '<span class="badge-no">Más barato McAllen</span>' : '<span style="color:#9CA3AF;font-size:10px">Sin datos</span>';
     var fuente = p.fuente_mx || '';
-    var fBadge = p.verificado ? '<span class="badge-cl">★ Claude</span>' : fuente.indexOf('auto') >= 0 ? '<span class="badge-sniim">SNIIM</span>' : '<span class="badge-ref">Ref.</span>';
+    var fBadge = p.verificado ? '<span class="badge-cl">★ Claude</span>' : (fuente.indexOf('auto') >= 0 ? '<span class="badge-sniim">SNIIM</span>' : '<span class="badge-ref">Ref.</span>');
 
-    html += '<tr class="' + rowCls + '">';
-    html += '<td class="idx">' + num + '</td>';
-    html += '<td class="tl">' + (p.nombre || '') + '</td>';
-    html += '<td class="num usd">$' + fmt2(p.pa_lb) + '</td>';
-    html += '<td class="num usd">$' + fmt2(p.pa_usd_kg) + '</td>';
-    html += '<td class="num usd" style="font-weight:700">$' + fmt2(p.pa_mxn_kg) + '</td>';
-    html += '<td class="num sep" style="font-weight:700">' + mx_s + '</td>';
-    html += '<td>' + fBadge + '</td>';
-    html += '<td class="num sep" style="color:' + colorDif + ';font-weight:700">' + dif_s + '</td>';
-    html += '<td style="color:' + colorDif + ';font-weight:700">' + pct_s + '</td>';
-    html += '<td>' + badge + '</td>';
-    html += '</tr>';
-    num++;
+    rows += '<tr style="background:' + rowbg + '">';
+    rows += '<td class="idx">' + (k+1) + '</td>';
+    rows += '<td class="tl">' + p.nombre + '</td>';
+    rows += '<td style="font-family:monospace;background:#EFF6FF">$' + f2(p.pa_lb) + '</td>';
+    rows += '<td style="font-family:monospace;background:#EFF6FF">$' + f2(p.pa_usd_kg) + '</td>';
+    rows += '<td style="font-family:monospace;background:#EFF6FF;font-weight:700">$' + f2(p.pa_mxn_kg) + '</td>';
+    rows += '<td style="font-family:monospace;font-weight:700;border-left:2px solid #D1D5DB">' + mx_s + '</td>';
+    rows += '<td>' + fBadge + '</td>';
+    rows += '<td style="font-family:monospace;color:' + colDif + ';font-weight:700;border-left:2px solid #D1D5DB">' + dif_s + '</td>';
+    rows += '<td style="color:' + colDif + ';font-weight:700">' + pct_s + '</td>';
+    rows += '<td>' + badge + '</td>';
+    rows += '</tr>';
   }
-  document.getElementById('tbody').innerHTML = html;
+  document.getElementById('tbody').innerHTML = rows;
 }
 
 function filtrar(el, cat) {
