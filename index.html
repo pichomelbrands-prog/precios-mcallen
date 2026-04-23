@@ -6,7 +6,7 @@
 <title>Pichomel Brands — Precios Mayoristas McAllen TX vs CDMX</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Arial,sans-serif}
-body{background:#F7F8FA;color:#374151;padding-top:0}
+body{background:#F7F8FA;color:#374151}
 .header{background:#fff;border-bottom:1px solid #E5E7EB;padding:14px 24px;display:flex;align-items:center;justify-content:space-between}
 .logo{display:flex;align-items:center;gap:10px}
 .logo-icon{width:34px;height:34px;background:#1B5E20;border-radius:8px;display:flex;align-items:center;justify-content:center}
@@ -29,19 +29,15 @@ body{background:#F7F8FA;color:#374151;padding-top:0}
 .filters{padding:0 24px 12px;display:flex;gap:6px;flex-wrap:wrap}
 .chip{font-size:11px;padding:5px 13px;border-radius:20px;border:1px solid #E5E7EB;cursor:pointer;color:#6B7280;background:#fff;font-weight:500}
 .chip.active{background:#1B5E20;color:white;border-color:#1B5E20}
-.tabla-cont{margin:0 24px 20px}.tabla-scroll{overflow-x:auto}
-table{width:100%;border-collapse:collapse;font-size:12px;min-width:820px;background:#fff;border:1px solid #E5E7EB;border-radius:0}
-thead tr{background:#1B5E20}
-th{padding:10px 8px;text-align:center;color:white;font-weight:600;font-size:10px;line-height:1.4;border:none}
-th.tl{text-align:left}
-td{padding:9px 8px;text-align:center;color:#111;font-size:12px;border-bottom:1px solid #F3F4F6;border:none;border-bottom:1px solid #F0F0F0}
-td.tl{text-align:left;font-weight:600}
-td.idx{color:#9CA3AF;font-weight:700;font-size:11px}
-td.usd{background:#EFF6FF}
+.tabla-wrap{margin:0 24px 20px;border:1px solid #E5E7EB;background:#fff;overflow-x:auto}
+.t-enc{width:100%;border-collapse:collapse;font-size:12px;min-width:820px;background:#1B5E20}
+.t-enc th{padding:10px 8px;text-align:center;color:white;font-weight:600;font-size:10px;line-height:1.4}
+.t-enc th.tl{text-align:left}
+.t-datos{width:100%;border-collapse:collapse;font-size:12px;min-width:820px}
+.t-datos td{padding:9px 8px;text-align:center;color:#111;font-size:12px;border-bottom:1px solid #F0F0F0}
+.t-datos td.tl{text-align:left;font-weight:600}
+.t-datos td.idx{color:#9CA3AF;font-weight:700;font-size:11px}
 .sep{border-left:2px solid #D1D5DB}
-.row-cdmx{background:#F0FDF4}
-.row-mc{background:#FFF1F2}
-.row-na{background:#ffffff}
 .badge-op{background:#DCFCE7;color:#166534;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
 .badge-no{background:#FEE2E2;color:#B91C1C;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700;white-space:nowrap;display:inline-block}
 .badge-cl{background:#1D4ED8;color:white;padding:1px 6px;border-radius:5px;font-size:9px;font-weight:600;display:inline-block}
@@ -105,28 +101,38 @@ td.usd{background:#EFF6FF}
   <span class="chip" onclick="filtrar(this,'hierba')">Hierbas</span>
 </div>
 
-<div class="tabla-cont">
-  <div class="tabla-scroll">
-  <table>
+<div class="tabla-wrap">
+  <table class="t-enc">
+    <colgroup>
+      <col style="width:30px"><col style="min-width:130px"><col style="width:55px">
+      <col style="width:60px"><col style="width:78px"><col style="width:78px">
+      <col style="width:82px"><col style="width:74px"><col style="width:56px"><col style="width:118px">
+    </colgroup>
     <thead>
       <tr>
-        <th style="width:30px">#</th>
-        <th class="tl" style="min-width:130px">Producto</th>
-        <th style="width:55px">$/lb</th>
-        <th style="width:60px">$/kg USD</th>
-        <th style="width:78px">MXN/kg McAllen</th>
-        <th class="sep" style="width:78px">MXN/kg CDMX</th>
-        <th style="width:82px">Fuente MX</th>
-        <th class="sep" style="width:74px">Dif. MXN/kg</th>
-        <th style="width:56px">Dif. %</th>
-        <th style="width:118px">¿Más barato?</th>
+        <th>#</th>
+        <th class="tl">Producto</th>
+        <th>$/lb</th>
+        <th>$/kg USD</th>
+        <th>MXN/kg McAllen</th>
+        <th class="sep">MXN/kg CDMX</th>
+        <th>Fuente MX</th>
+        <th class="sep">Dif. MXN/kg</th>
+        <th>Dif. %</th>
+        <th>¿Más barato?</th>
       </tr>
     </thead>
+  </table>
+  <table class="t-datos">
+    <colgroup>
+      <col style="width:30px"><col style="min-width:130px"><col style="width:55px">
+      <col style="width:60px"><col style="width:78px"><col style="width:78px">
+      <col style="width:82px"><col style="width:74px"><col style="width:56px"><col style="width:118px">
+    </colgroup>
     <tbody id="tbody">
       <tr><td colspan="10" class="loading">Cargando datos...</td></tr>
     </tbody>
   </table>
-  </div>
 </div>
 
 <div class="footer">
