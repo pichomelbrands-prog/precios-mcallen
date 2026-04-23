@@ -24,8 +24,9 @@ jobs:
       - name: Crear carpeta docs
         run: mkdir -p docs
 
-      - name: Copiar index.html a docs
-        run: cp index.html docs/index.html
+      - name: Obtener index.html desde gh-pages
+        run: |
+          curl -s https://pichomelbrands-prog.github.io/precios-mcallen/index.html -o docs/index.html || cp index.html docs/index.html
 
       - name: Generar reporte
         env:
