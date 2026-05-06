@@ -19,7 +19,7 @@ jobs:
           python-version: '3.11'
 
       - name: Instalar dependencias
-        run: pip install requests openpyxl schedule twilio reportlab
+        run: pip install requests openpyxl schedule twilio reportlab pdfminer.six
 
       - name: Crear carpeta docs
         run: mkdir -p docs
